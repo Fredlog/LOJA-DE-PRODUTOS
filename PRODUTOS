@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <string.h>
+
+struct dados
+{
+    int codigo;
+    char nome[20];
+    float preco;
+    int quantidade;
+};
+int i = 0;
+struct dados dados [100];
+
+
+void inserir () {
+   
+    int teste;
+    int codigo;
+    char resposta;
+    do {
+        while (i < 100 && dados[i].codigo != 0 && dados[i].preco != 0 && dados[i].quantidade != 0){
+            i++;
+        }
+
+        if (i>=100) {
+            printf("\nAtingiu o número limite de produtos");
+            break;
+        }
+        
+    do {
+        teste = 0;
+        printf("\nDigite um código para o produto: \n");
+        scanf ("%d", &codigo);
+        for (int u = 0; u <100; u++) {
+            if (dados[u].codigo == codigo){
+                teste = 1;
+                printf("\nJá existe um produto com esse código. Coloque outro\n\n");
+                
+                break;
+            }
+        }
+    } 
+    while (teste);
+    dados[i].codigo = codigo;
+
+
+    printf("Digite um nome para o produto: \n");
+    scanf ("%s", dados[i].nome);
+
+    printf("Digite um preço para o produto: \n");
+    scanf ("%f", &dados[i].preco);
+
+    printf("Digite a quantidade no estoque do produto: \n");
+    scanf ("%d", &dados[i].quantidade);
+
+    printf("Produto inserido com sucesso!\n\n");
+    
+    printf("Deseja inserir mais produtos? S/N\n");
+    scanf(" %c", &resposta);
+    
+ 
+    
+    }
+     while ((resposta == 'S' || resposta =='s') && i <100);
+        
+    
+}
+
+int menu () {
+    int resposta;
+    printf("\n=== Menu de Opções === \n1. Inserir produto \n2. Listar todos os produtos \n3. Buscar produto por nome \n4. Excluir produto por nome \n5. Sair \nEscolha uma opção: ");
+    scanf("%d", &resposta);
+    return resposta;
+}
+
+void listar (){
+    
+    printf("\nMostrando todos os produtos:\n\n");
+    for (i = 0; i<100; i++){
+        if (dados[i].codigo != 0 && dados[i].preco != 0 && dados[i].quantidade != 0) {
+    printf ("Codigo: %d\nNome: %s\nPreço: %.2f\nQuantidade no estoque: %d\n\n", dados[i].codigo,dados[i].nome,dados[i].preco,dados[i].quantidade);
+        }
+    }
+    
+}
+
+void buscar (char a[20]){
+    
+    for(i = 0;i<100;i++){
+        if (strcmp (dados[i].nome, a)== 0){
+            printf ("\nCodigo: %d\nNome: %s\nPreço: %.2f\nQuantidade no estoque: %d\n\n", dados[i].codigo,dados[i].nome,dados[i].preco,dados[i].quantidade);
+        }
+
+    };
+}
+
+void excluir (char a[20]){
+    
+    for(i = 0;i<100;i++){
+        if (strcmp (dados[i].nome, a)== 0){
+                printf("\nExcluindo produto...\n\n");
+                dados[i].preco = 0;
+                dados[i].codigo = 0;
+                dados[i].quantidade = 0;
+        }
+}
+}
+
+
+int main () {
+    int a;
+    do {
+        a = menu ();
+    
+    if ((a == 1)) {
+        inserir ();
+        
+    }
+
+    else if ((a == 2)){
+        listar ();
+     
+    }
+
+    else if ((a == 3)) {
+        char nome[20];
+        printf("Coloque o nome do produto: ");
+        scanf (" %s", nome);
+        buscar (nome);
+     
+
+    }
+
+    else if ((a == 4)){
+            char n[20];
+            printf("Coloque o nome do produto que deseja excluir: ");
+            scanf (" %s", n);
+            excluir (n);
+
+        
+    }
+    else if ((a == 5)){
+        printf("Fechando o programa");
+    }
+    }
+    while (a != 5); 
+        return 0;
+    
+    
+}
